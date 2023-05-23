@@ -1,23 +1,42 @@
 const slider = document.querySelector('.slider');
-const prevBtn = slider.querySelector('.prev');
-const nextBtn = slider.querySelector('.next');
 const slides = slider.querySelectorAll('.slide');
+const dotsContainer = slider.querySelector('.dots');
 let currentIndex = 0;
 
 function showSlide(index) {
-  slides.forEach((slide, i) => {
-    slide.style.transform = `translateX(${100 * (i - index)}%)`;
+  const slideWidth = slides[0].offsetWidth;
+  const offset = -index * slideWidth;
+  slider.querySelector('.slides').style.transform = `translateX(${offset}px)`;
+}
+
+function createDots() {
+  slides.forEach((slide, index) => {
+    const dot = document.createElement('span');
+    dot.classList.add('dot');
+    dot.addEventListener('click', () => {
+      currentIndex = index;
+      showSlide(currentIndex);
+      updateActiveDot();
+    });
+    dotsContainer.appendChild(dot);
   });
 }
 
-prevBtn.addEventListener('click', () => {
-  currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
-  showSlide(currentIndex);
-});
+function updateActiveDot() {
+  const dots = dotsContainer.querySelectorAll('.dot');
+  dots.forEach((dot, index) => {
+    dot.classList.toggle('active', index === currentIndex);
+  });
+}
 
-nextBtn.addEventListener('click', () => {
-  currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
+function autoSlide() {
+  currentIndex = (currentIndex + 1) % slides.length;
   showSlide(currentIndex);
-});
+  updateActiveDot();
+}
 
+createDots();
 showSlide(currentIndex);
+updateActiveDot();
+setTimeout(autoSlide, 5000); // Display each slide for 10 seconds
+setInterval(autoSlide, 5000); // Auto slide every 8 seconds
