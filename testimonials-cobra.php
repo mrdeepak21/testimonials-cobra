@@ -16,61 +16,49 @@ wp_enqueue_script('script', plugins_url( '/front-end/script.js', __FILE__ ), fal
 
 add_shortcode( 'cobra_testimonials', function()
 {
+  global $wpdb;
+  $array = [
+"post_type" => "testimonials",
+"post_status" => "publish",
+"numberposts" => 5,
+  ] ;
+
+  $testimonials = get_posts($array);
+  $image = ""; $slides = "";
+  foreach ($testimonials as $key => $value) {
+    $isActive = $key ===0 ? 'active':'';
+    $image .= '<div class="person-slide slide-'.$key.'">
+    <img src="'.wp_get_attachment_url( get_post_thumbnail_id($value->ID), 'thumbnail' ).'" alt="" srcset="">
+  </div>';
+  
+  $slides .= '<div class="slide">
+  <p class="description elementor-heading-title">
+    '.$value->post_content.'
+  </p>
+  <div class="name">
+  '.$value->post_title.'
+  </div>
+  <div class="degignation">
+    '.get_post_meta($value->ID, 'designation', true).'
+  </div>
+</div>'; 
+  
+}
     return '
     <div class="row">
       <div class="col-40">
-        <img src="https://picsum.photos/800/600" width="1000" alt="" srcset="">
+        <div class="person-slider">
+          <div class="person-slides">
+          '.$image.'
+          </div>
+        </div>
       </div>
       <div class="col-60">
         <div class="slider">
           <div class="slides">
-            <div class="slide">
-              <p class="description elementor-heading-title">
-                We have perfected our formulas over time, based on your feedback. Check out hundreds of reviews on our website.We can\'t wait until you are a part of our Good4Me Family.
-              </p>
-              <div class="name">
-                Stephen Herlick, Senior Director of ERP
-              </div>
-              <div class="degignation">
-                Management Support
-              </div>
-            </div>
-            <div class="slide">
-              <p class="description elementor-heading-title">
-                We have perfected our formulas over time, based on your feedback. Check out hundreds of reviews on our website.We can\'t wait until you are a part of our Good4Me Family.
-              </p>
-              <div class="name">
-                Stephen Herlick, Senior Director of ERP
-              </div>
-              <div class="degignation">
-                Management Support
-              </div>
-            </div>
-            <div class="slide">
-              <p class="description elementor-heading-title">
-                We have perfected our formulas over time, based on your feedback. Check out hundreds of reviews on our website.We can\'t wait until you are a part of our Good4Me Family.
-              </p>
-              <div class="name">
-                Stephen Herlick, Senior Director of ERP
-              </div>
-              <div class="degignation">
-                Management Support
-              </div>
-            </div>
-            <div class="slide">
-              <p class="description elementor-heading-title">
-                We have perfected our formulas over time, based on your feedback. Check out hundreds of reviews on our website.We can\'t wait until you are a part of our Good4Me Family.
-              </p>
-              <div class="name">
-                Stephen Herlick, Senior Director of ERP
-              </div>
-              <div class="degignation">
-                Management Support
-              </div>
-            </div>
-          </div>
-          <div class="dots"></div>
+            '.$slides.'                     
         </div>
+        <div class="dots"></div>
       </div>
     </div>
       ';

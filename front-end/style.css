@@ -2,16 +2,14 @@
   position: relative;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .row:after {
   content: "";
   display: table;
   clear: both;
-}
-
-div[class^="col-"] {
-  padding: 20px 50px;
 }
 
 .col-40{
@@ -23,6 +21,7 @@ div[class^="col-"] {
 
 .col-60{
   width: 60%;
+  padding: 20px 50px;
 }
 
 .col-60::before{
@@ -36,18 +35,65 @@ div[class^="col-"] {
   transform: translateY(-45%);
 }
 
-.slider {
+.slider, .person-slider {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-.slides {
+.slides, .person-slides {
   display: flex;
   width: 100%;
   transition: transform 0.5s;
   padding-left: 20px;
 }
+ .person-slides {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 5px;
+ }
+
+ .person-slides div:nth-of-type(even) {
+  grid-column: 2;
+}
+
+ .slide-1 {
+  grid-row: 2;
+}
+
+.slide-2 {
+  grid-row: 3;
+}
+
+.slide-3{
+  grid-row: 4;
+}
+.slide-4 {
+  grid-row: 5;
+}
+
+ .person-slide{
+  border-radius: 50%;
+  width: 150px;
+  border: 3px solid #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 3px 8px 1px #888;
+ }
+
+ div.person-slide:nth-child(even) {
+  grid-column: 2;
+   }
+
+ .person-slide img{
+  display: inline-block;
+  border-radius: 50%;
+ }
+
+ .person-slide.active{
+  border-color: #db6926;
+ }
 
 .slide {
   flex: 1 0 100%;
@@ -96,8 +142,8 @@ content: "—";
 .dots {
   position: absolute;
   top: 50%;
-  left: 38.6%;
-  transform: translateY(-50%);
+  left: 40%;
+  transform: translateX(-16.5px) translateY(-50%);
   display: flex;
   flex-direction: column;
   gap: 20px;
