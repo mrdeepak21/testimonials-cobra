@@ -50,7 +50,7 @@
  .person-slides {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 5px;
+  padding: 10px;
  }
 
  .person-slides div:nth-of-type(even) {
