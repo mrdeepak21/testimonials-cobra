@@ -7,13 +7,12 @@
  * Description: Testimonials Showcase Using CPT UI plugin with cobra_testimonials post_type. Use shortcode [cobra_testimonials] to display anywhere
  */
 
-wp_enqueue_style( 'style', plugins_url( '/front-end/style.css', __FILE__ ), false, '1.0', 'all' );
-add_action('wp_head',function(){
-  echo '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />';
-});
-
-if(is_front_page()) {
-wp_enqueue_script('script', plugins_url( '/front-end/script.js', __FILE__ ), false,'1.0', true );}
+ add_action( 'wp_enqueue_scripts', function () {
+  wp_enqueue_style( 'testimonials', plugins_url( '/front-end/style.css' , __FILE__ ), false, '1.0', 'all');
+  wp_enqueue_style( 'font-awesome-6.4', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',false,'6.4','all');
+  if(is_front_page()) {
+  wp_enqueue_script('testimonials',plugins_url( '/front-end/script.js', __FILE__ ), false,'1.0', true );}
+} );
 
 add_shortcode( 'cobra_testimonials', function()
 {
@@ -46,6 +45,7 @@ add_shortcode( 'cobra_testimonials', function()
   
 }
     return '
+    <div class="testimonials">
     <div class="row">
       <div class="col-40">
         <div class="person-slider">
@@ -61,6 +61,7 @@ add_shortcode( 'cobra_testimonials', function()
         </div>
         <div class="dots"></div>
       </div>
+    </div>
     </div>
       ';
 });
