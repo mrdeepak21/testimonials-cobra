@@ -226,10 +226,11 @@ content: "—";
   }
 }
 
-@media (max-width:1023px){
+@media (max-width:767px){
   .dots {
     top: 24%;
-  }}
+  }
+}
 
 .dot {
   display: inline-block;
